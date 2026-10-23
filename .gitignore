@@ -1,0 +1,9 @@
+/target
+
+*.csv
+
+*.opencode
+*.md
+*.pdf
+
+*.idea
