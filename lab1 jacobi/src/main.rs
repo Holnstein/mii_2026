@@ -1,3 +1,5 @@
+//! Основной файл запуска алгоритма метода Якоби для поиска собственных чисел и векторов
+//! симметричной матрицы
 use std::io;
 
 use nalgebra::DMatrix;
@@ -7,6 +9,8 @@ use jacobi::matrix;
 use jacobi::matrix::MatrixConfig;
 use jacobi::{off_sum, JacobiSolver};
 
+
+/// Чтение матрицы с консольного инпута
 fn read_input_matrix() -> Result<DMatrix<f32>, io::Error> {
     match console_io::read_source_choice()? {
         1 => {

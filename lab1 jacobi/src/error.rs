@@ -1,3 +1,4 @@
+//! Файл с ошибками для алгоритма Якоби
 use std::error::Error;
 use std::fmt;
 

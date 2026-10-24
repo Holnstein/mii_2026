@@ -1,10 +1,10 @@
+//! Работа консольного приложения
 use std::fs;
 use std::io::{self, Write};
 
 use nalgebra::{DMatrix, DVector};
 
-// TODO: написать контракт вручную
-// TODO: написать доккомментарий вручную
+/// Выбор для юзера, какой способ чтения матрицы будет использоваться
 pub fn read_source_choice() -> Result<u8, io::Error> {
     println!("Источник матрицы:");
     println!("  1 — вручную в консоле (элементы через пробел, по строке на вход)");
@@ -24,8 +24,7 @@ pub fn read_source_choice() -> Result<u8, io::Error> {
     })
 }
 
-// TODO: написать контракт вручную
-// TODO: написать доккомментарий вручную
+/// Чтение размерности матрицы
 pub fn read_dims() -> Result<usize, io::Error> {
     print!("Введите размерность матрицы (n): ");
     io::stdout().flush()?;
@@ -41,8 +40,7 @@ pub fn read_dims() -> Result<usize, io::Error> {
     })
 }
 
-// TODO: написать контракт вручную
-// TODO: написать доккомментарий вручную
+/// Чтение полного пути до матрицы, если выбрано чтение из файла
 pub fn read_path() -> Result<String, io::Error> {
     print!("Путь к файлу: ");
     io::stdout().flush()?;
@@ -58,8 +56,7 @@ pub fn read_path() -> Result<String, io::Error> {
     }
 }
 
-// TODO: написать контракт вручную
-// TODO: написать доккомментарий вручную
+/// Чтение матрицы с консольного ввода
 pub fn read_matrix_from_console(n: usize) -> Result<DMatrix<f32>, io::Error> {
     let mut data = Vec::with_capacity(n * n);
 
@@ -87,8 +84,7 @@ pub fn read_matrix_from_console(n: usize) -> Result<DMatrix<f32>, io::Error> {
     Ok(DMatrix::from_row_slice(n, n, &data))
 }
 
-// TODO: написать контракт вручную
-// TODO: написать доккомментарий вручную
+/// Чтение матрицы из файла
 pub fn read_matrix_from_file(path: &str) -> Result<DMatrix<f32>, io::Error> {
     let content = fs::read_to_string(path)?;
 
@@ -130,8 +126,12 @@ pub fn read_matrix_from_file(path: &str) -> Result<DMatrix<f32>, io::Error> {
     Ok(DMatrix::from_row_slice(n, n, &data))
 }
 
-// TODO: написать контракт вручную
-// TODO: написать доккомментарий вручную
+/// Вывод решения
+///
+/// # Аргументы
+///
+/// * `eigenvalues` - собственные числа матрицы (их сумма равна сумме диагональных элементов)
+/// * `eigenvectors` - собственные векторы, представленные столбцами в одной матрице (`V`)
 pub fn print_solution(eigenvalues: &DVector<f32>, eigenvectors: &DMatrix<f32>) {
     println!("Собственные числа:");
     for (i, &lambda) in eigenvalues.iter().enumerate() {
@@ -142,8 +142,7 @@ pub fn print_solution(eigenvalues: &DVector<f32>, eigenvectors: &DMatrix<f32>) {
     println!("{eigenvectors:.4}");
 }
 
-// TODO: написать контракт вручную
-// TODO: написать доккомментарий вручную
+/// Вывод невязки в консоль из формуды A * V = V * lambda
 pub fn print_residual(
     a: &DMatrix<f32>,
     eigenvalues: &DVector<f32>,
@@ -154,8 +153,18 @@ pub fn print_residual(
     println!("Невязка ||A*V - V*diag(lambda)|| = {residual:.6e}");
 }
 
-// TODO: написать контракт вручную
-// TODO: написать доккомментарий вручную
+/// Парсинг чисел с консоли или файла
+///
+/// # Аргументы
+///
+/// * `line` - строка с текущей строкой читаемой матрицы
+///
+/// # Возвращаемые значения
+///
+/// Result<Vec<f32>> - вектор значений для матрицы
+///
+/// io::Error - ошибка ввода
+///
 fn parse_numbers(line: &str) -> Result<Vec<f32>, io::Error> {
     line.split(|c: char| c == ';' || c.is_whitespace())
         .filter(|token| !token.is_empty())
@@ -169,5 +178,3 @@ fn parse_numbers(line: &str) -> Result<Vec<f32>, io::Error> {
         })
         .collect()
 }
-
-// TODO: написать тест вручную
