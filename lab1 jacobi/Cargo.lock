@@ -89,6 +89,7 @@ checksum = "e762b9b188634fc508d4ec54b62ea3d352c43fd431d18d05d46f559f217f4725"
 name = "jacobi"
 version = "0.1.0"
 dependencies = [
+ "approx",
  "nalgebra",
 ]
 

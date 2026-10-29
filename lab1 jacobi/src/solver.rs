@@ -14,7 +14,7 @@ impl JacobiSolver {
     pub fn new() -> Self {
         Self {
             max_iterations: 1000,
-            tolerance: 1e-2,
+            tolerance: 1e-6,
         }
     }
 
