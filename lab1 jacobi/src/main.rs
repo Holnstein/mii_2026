@@ -1,7 +1,7 @@
 //! Основной файл запуска алгоритма метода Якоби для поиска собственных чисел и векторов
 //! симметричной матрицы
 use std::io;
-
+use std::io::Write;
 use nalgebra::DMatrix;
 
 use jacobi::console_io;
@@ -68,7 +68,29 @@ fn main() {
     let s0 = off_sum(&mtrx);
     println!("S0 (сумма квадратов недиагональных элементов) = {s0:.6e}");
 
-    match JacobiSolver::new().solve(&mtrx) {
+    let tolerance = match console_io::read_tolerance() {
+        Ok(t) => t,
+        Err(e) => {
+            eprintln!("Ошибка ввода точности: {e}");
+            return;
+        }
+    };
+
+    let max_iterations = match console_io::read_max_iterations() {
+        Ok(m) => m,
+        Err(e) => {
+            eprintln!("Ошибка ввода итераций: {e}");
+            return;
+        }
+    };
+
+    println!("Параметры: точность = {tolerance}, макс. итераций = {max_iterations}");
+
+    let solver = JacobiSolver::new()
+        .with_tolerance(tolerance)
+        .with_max_iterations(max_iterations);
+
+    match solver.solve(&mtrx) {
         Ok((eigenvalues, eigenvectors)) => {
             console_io::print_solution(&eigenvalues, &eigenvectors);
             console_io::print_residual(&mtrx, &eigenvalues, &eigenvectors);
@@ -77,4 +99,9 @@ fn main() {
             eprintln!("Ошибка решения: {e}");
         }
     }
+
+    println!("Нажмите Enter для выхода...");
+    io::stdout().flush().unwrap();
+    let mut input = String::new();
+    io::stdin().read_line(&mut input).unwrap();
 }

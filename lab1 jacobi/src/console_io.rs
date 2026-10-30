@@ -40,6 +40,66 @@ pub fn read_dims() -> Result<usize, io::Error> {
     })
 }
 
+/// Чтение точности (эпсилон) с консоли
+pub fn read_tolerance() -> Result<f32, io::Error> {
+    print!("Введите точность (эпсилон, по умолчанию 1e-6): ");
+    io::stdout().flush()?;
+
+    let mut line = String::new();
+    io::stdin().read_line(&mut line)?;
+
+    let trimmed = line.trim();
+    if trimmed.is_empty() {
+        return Ok(1e-6);
+    }
+
+    let eps: f32 = trimmed.replace(',', ".").parse().map_err(|err| {
+        io::Error::new(
+            io::ErrorKind::InvalidInput,
+            format!("'{trimmed}' - не число: {err}"),
+        )
+    })?;
+
+    if !(eps > 0.0 && eps.is_finite()) {
+        return Err(io::Error::new(
+            io::ErrorKind::InvalidInput,
+            "точность должна быть положительным конечным числом",
+        ));
+    }
+
+    Ok(eps)
+}
+
+/// Чтение максимального количества итераций с консоли
+pub fn read_max_iterations() -> Result<usize, io::Error> {
+    print!("Введите макс. кол-во итераций (по умолчанию 1000): ");
+    io::stdout().flush()?;
+
+    let mut line = String::new();
+    io::stdin().read_line(&mut line)?;
+
+    let trimmed = line.trim();
+    if trimmed.is_empty() {
+        return Ok(1000);
+    }
+
+    let iters: usize = trimmed.parse().map_err(|err| {
+        io::Error::new(
+            io::ErrorKind::InvalidInput,
+            format!("'{trimmed}' — не целое число: {err}"),
+        )
+    })?;
+
+    if iters == 0 {
+        return Err(io::Error::new(
+            io::ErrorKind::InvalidInput,
+            "количество итераций должно быть больше 0",
+        ));
+    }
+
+    Ok(iters)
+}
+
 /// Чтение полного пути до матрицы, если выбрано чтение из файла
 pub fn read_path() -> Result<String, io::Error> {
     print!("Путь к файлу: ");
