@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":["create_symmetric_matrix","print_matrix"],"struct":["MatrixConfig"]};

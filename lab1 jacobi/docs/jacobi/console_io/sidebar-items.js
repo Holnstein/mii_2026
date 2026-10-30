@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":["print_residual","print_solution","read_dims","read_matrix_from_console","read_matrix_from_file","read_max_iterations","read_path","read_source_choice","read_tolerance"]};

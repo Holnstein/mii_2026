@@ -1,0 +1,2 @@
+window.ALL_CRATES = ["approx","bytemuck","cfg_if","chacha20","cpufeatures","getrandom","jacobi","libm","matrixmultiply","nalgebra","nalgebra_macros","ndarray","num_complex","num_integer","num_rational","num_traits","proc_macro2","quote","rand","rand_core","rand_distr","rawpointer","safe_arch","simba","syn","typenum","unicode_ident","wide"];
+//{"start":21,"fragment_lengths":[8,11,9,11,14,12,9,7,17,11,18,10,14,14,15,13,14,8,7,12,13,13,12,8,6,10,16,7]}
