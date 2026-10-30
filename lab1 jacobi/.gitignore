@@ -3,7 +3,9 @@
 *.csv
 
 *.opencode
-*.md
+
+lab1.md
+lecture1.md
 *.pdf
 
 *.idea
