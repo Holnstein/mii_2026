@@ -1,0 +1,14 @@
+# IDE
+.idea/
+.vscode/
+.vs/
+*.iml
+*.user
+*.suo
+
+# Сборка Rust
+target/
+
+# Системное
+Thumbs.db
+desktop.ini
